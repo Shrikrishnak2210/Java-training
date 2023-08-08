@@ -106,7 +106,7 @@ public class Client {
 					bookId = scanner.nextInt();
 					System.out.print("Price: ");
 					price = scanner.nextDouble();
-					bookService.addBook(new Book(bookId,title,author,category,price));
+					bookService.addBook(new Book(bookId, title, author, category, price));
 					System.out.println();
 					break;
 				case 8:
@@ -124,6 +124,7 @@ public class Client {
 					System.out.println();
 					break;
 				case 10:
+					System.out.println("Exited");
 					System.exit(0);
 				default:
 					System.out.println("Invalid choice");

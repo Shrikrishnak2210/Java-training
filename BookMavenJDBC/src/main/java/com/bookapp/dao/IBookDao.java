@@ -7,22 +7,22 @@ import com.bookapp.exceptions.BookNotFoundException;
 import com.bookapp.model.Book;
 
 public interface IBookDao {
-	List<Book> findAll() throws SQLException;
+	List<Book> findAll() ;
 
-	void addBook(Book book) throws SQLException;
+	void addBook(Book book) ;
 
-	void updateBook(int bookId, double price) throws SQLException;
+	void updateBook(int bookId, double price) ;
 
-	void deleteBook(int bookId) throws SQLException;
+	void deleteBook(int bookId) ;
 
 	List<Book> getByAuthorContains(String author) throws BookNotFoundException;
 
-	List<Book> getByCategory(String category) throws BookNotFoundException, SQLException;
+	List<Book> getByCategory(String category) throws BookNotFoundException;
 
-	List<Book> getByPriceLessThan(double price) throws BookNotFoundException, SQLException;
+	List<Book> getByPriceLessThan(double price) throws BookNotFoundException;
 
 	List<Book> getByAuthorContainsAndCategory(String author, String category)
-			throws BookNotFoundException, SQLException;
+			throws BookNotFoundException;
 
-	Book getById(int bookId) throws BookNotFoundException, SQLException;
+	Book getById(int bookId) throws BookNotFoundException;
 }
