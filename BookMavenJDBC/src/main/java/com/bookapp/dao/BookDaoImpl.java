@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import com.bookapp.model.Book;
+import com.bookapp.util.DbConnection;
 import com.bookapp.util.Queries;
 
 public class BookDaoImpl implements IBookDao {
