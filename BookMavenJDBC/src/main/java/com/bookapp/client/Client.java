@@ -118,7 +118,7 @@ public class Client {
 				case 9:
 					System.out.print("Enter BookID: ");
 					bookId = scanner.nextInt();
-					System.out.print("Enter the new price: ");
+					System.out.print("Enter new price: ");
 					price = scanner.nextDouble();
 					bookService.updateBookPrice(bookId, price);
 					System.out.println();
@@ -133,7 +133,7 @@ public class Client {
 				}
 			}
 		} catch (Exception e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			scanner.close();
 		}

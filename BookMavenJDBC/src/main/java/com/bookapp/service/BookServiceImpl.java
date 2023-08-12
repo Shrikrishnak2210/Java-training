@@ -1,6 +1,5 @@
 package com.bookapp.service;
 
-import java.sql.SQLException;
 import java.util.List;
 import com.bookapp.dao.BookDaoImpl;
 import com.bookapp.dao.IBookDao;
@@ -22,22 +21,19 @@ public class BookServiceImpl implements IBookService {
 
 	@Override
 	public void updateBookPrice(int bookId, double price)  {
-
 		bookDao.updateBook(bookId, price);
-
 	}
 
 	@Override
 	public void deleteBook(int bookId)  {
 		bookDao.deleteBook(bookId);
-
 	}
 
 	@Override
 	public List<Book> getByAuthorContains(String author) throws BookNotFoundException {
 		List<Book> books = bookDao.getByAuthorContains(author);
 		if (books.isEmpty())
-			throw new BookNotFoundException("books not found by author");
+			throw new BookNotFoundException("Books not found by author");
 		return books.stream().sorted((o1, o2) -> o1.compareTo(o2)).toList();
 	}
 
@@ -45,7 +41,7 @@ public class BookServiceImpl implements IBookService {
 	public List<Book> getByCategory(String category) throws BookNotFoundException {
 		List<Book> books = bookDao.getByCategory(category);
 		if (books.isEmpty())
-			throw new BookNotFoundException("books not found by category");
+			throw new BookNotFoundException("Books not found by category");
 		return books.stream().sorted((o1, o2) -> o1.compareTo(o2)).toList();
 	}
 
@@ -53,7 +49,7 @@ public class BookServiceImpl implements IBookService {
 	public List<Book> getByPriceLessThan(double price) throws BookNotFoundException {
 		List<Book> books = bookDao.getByPriceLessThan(price);
 		if (books.isEmpty())
-			throw new BookNotFoundException("books not found below the given price");
+			throw new BookNotFoundException("Books not found below the given price");
 		return books.stream().sorted((o1, o2) -> o1.compareTo(o2)).toList();
 	}
 
@@ -62,7 +58,7 @@ public class BookServiceImpl implements IBookService {
 			throws BookNotFoundException{
 		List<Book> books = bookDao.getByAuthorContainsAndCategory(author, category);
 		if (books.isEmpty())
-			throw new BookNotFoundException("books not found by author and category");
+			throw new BookNotFoundException("Books not found by author and category");
 		return books.stream().sorted((o1, o2) -> o1.compareTo(o2)).toList();
 	}
 
@@ -70,7 +66,7 @@ public class BookServiceImpl implements IBookService {
 	public Book getById(int bookId) throws BookNotFoundException {
 		Book book = bookDao.getById(bookId);
 		if (book == null)
-			throw new BookNotFoundException("");
+			throw new BookNotFoundException("Book not found by ID");
 		return book;
 	}
 

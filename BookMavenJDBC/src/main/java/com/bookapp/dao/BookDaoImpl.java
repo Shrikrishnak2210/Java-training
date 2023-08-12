@@ -1,14 +1,11 @@
 package com.bookapp.dao;
 
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-
-import com.bookapp.exceptions.BookNotFoundException;
 import com.bookapp.model.Book;
 import com.bookapp.util.Queries;
 
@@ -16,10 +13,10 @@ public class BookDaoImpl implements IBookDao {
 
 	@Override
 	public List<Book> findAll() {
+		List<Book> books = new ArrayList<>();
 		try (Connection connection = DbConnection.openConnection();
 				PreparedStatement statement = connection.prepareStatement(Queries.QUERYALL);) {
 			ResultSet result = statement.executeQuery();
-			List<Book> books = new ArrayList<Book>();
 			while (result.next()) {
 				Book book = new Book();
 				book.setBookId(result.getInt(1));
@@ -29,11 +26,10 @@ public class BookDaoImpl implements IBookDao {
 				book.setPrice(result.getDouble(5));
 				books.add(book);
 			}
-			return books;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return books;
 	}
 
 	@Override
@@ -76,11 +72,11 @@ public class BookDaoImpl implements IBookDao {
 
 	@Override
 	public List<Book> getByAuthorContains(String author) {
+		List<Book> books = new ArrayList<>();
 		try (Connection connection = DbConnection.openConnection();
 				PreparedStatement statement = connection.prepareStatement(Queries.QUERYBYAUTHOR);) {
 			statement.setString(1, "%" + author + "%");
 			ResultSet result = statement.executeQuery();
-			List<Book> books = new ArrayList<Book>();
 			while (result.next()) {
 				Book book = new Book();
 				book.setBookId(result.getInt(1));
@@ -90,20 +86,19 @@ public class BookDaoImpl implements IBookDao {
 				book.setPrice(result.getDouble(5));
 				books.add(book);
 			}
-			return books;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return books;
 	}
 
 	@Override
 	public List<Book> getByCategory(String category) {
+		List<Book> books = new ArrayList<>();
 		try (Connection connection = DbConnection.openConnection();
 				PreparedStatement statement = connection.prepareStatement(Queries.QUERYBYGENRE);) {
 			statement.setString(1, category);
 			ResultSet result = statement.executeQuery();
-			List<Book> books = new ArrayList<Book>();
 			while (result.next()) {
 				Book book = new Book();
 				book.setBookId(result.getInt(1));
@@ -113,20 +108,19 @@ public class BookDaoImpl implements IBookDao {
 				book.setPrice(result.getDouble(5));
 				books.add(book);
 			}
-			return books;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return books;
 	}
 
 	@Override
 	public List<Book> getByPriceLessThan(double price) {
+		List<Book> books = new ArrayList<>();
 		try (Connection connection = DbConnection.openConnection();
 				PreparedStatement statement = connection.prepareStatement(Queries.QUERYBYPRICELESSTHAN);) {
 			statement.setDouble(1, price);
 			ResultSet result = statement.executeQuery();
-			List<Book> books = new ArrayList<Book>();
 			while (result.next()) {
 				Book book = new Book();
 				book.setBookId(result.getInt(1));
@@ -136,22 +130,20 @@ public class BookDaoImpl implements IBookDao {
 				book.setPrice(result.getDouble(5));
 				books.add(book);
 			}
-			return books;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
-
+		return books;
 	}
 
 	@Override
 	public List<Book> getByAuthorContainsAndCategory(String author, String category) {
+		List<Book> books = new ArrayList<>();
 		try (Connection connection = DbConnection.openConnection();
 				PreparedStatement statement = connection.prepareStatement(Queries.QUERYBYAUTHORANDGENRE);) {
 			statement.setString(1, author);
 			statement.setString(2, category);
 			ResultSet result = statement.executeQuery();
-			List<Book> books = new ArrayList<Book>();
 			while (result.next()) {
 				Book book = new Book();
 				book.setBookId(result.getInt(1));
@@ -161,20 +153,19 @@ public class BookDaoImpl implements IBookDao {
 				book.setPrice(result.getDouble(5));
 				books.add(book);
 			}
-			return books;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return books;
 	}
 
 	@Override
 	public Book getById(int bookId) {
+		Book book = null;
 		try (Connection connection = DbConnection.openConnection();
 				PreparedStatement statement = connection.prepareStatement(Queries.QUERYBYBOOKID);) {
 			statement.setInt(1, bookId);
 			ResultSet result = statement.executeQuery();
-			Book book = null;
 			while (result.next()) {
 				book = new Book();
 				book.setBookId(result.getInt(1));
@@ -183,11 +174,10 @@ public class BookDaoImpl implements IBookDao {
 				book.setCategory(result.getString(4));
 				book.setPrice(result.getDouble(5));
 			}
-			return book;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return book;
 	}
 
 }
