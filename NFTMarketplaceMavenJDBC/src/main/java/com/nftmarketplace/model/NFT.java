@@ -5,7 +5,6 @@ public class NFT {
 	private String nftName;
 	private String creator;
 	private String category;
-//	private double balance;
 	private double price;
 
 	public NFT() {
@@ -17,7 +16,6 @@ public class NFT {
 		this.nftName = nftName;
 		this.creator = creator;
 		this.category = category;
-//		this.balance = balance;
 		this.price = price;
 	}
 
@@ -53,14 +51,6 @@ public class NFT {
 		this.category = category;
 	}
 
-//	public double getBalance() {
-//		return balance;
-//	}
-//
-//	public void setBalance(double balance) {
-//		this.balance = balance;
-//	}
-
 	public double getPrice() {
 		return price;
 	}
@@ -74,13 +64,5 @@ public class NFT {
 		return "NFT [address=" + address + ", nftName=" + nftName + ", creator=" + creator + ", category=" + category
 				+ ", price=" + price + " ETH]";
 	}
-
-//	@Override
-//	public String toString() {
-//		return "NFT [address=" + address + ", nftName=" + nftName + ", creator=" + creator + ", category=" + category
-//				+ ", balance=" + balance + ", price=" + price + "]";
-//	}
-	
-	
 
 }

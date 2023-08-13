@@ -19,7 +19,7 @@ public class NFTDaoImpl implements INFTDao {
 	@Override
 	public void addNFT(NFT nft) {
 		try (Connection connection = DbConnection.openConnection();
-				PreparedStatement statement = connection.prepareStatement(Queries.INSERTQUERY);) {
+				PreparedStatement insertStatement = connection.prepareStatement(Queries.INSERTQUERY);) {
 			// generate unique random address
 			SecureRandom random = new SecureRandom();
 			StringBuilder address = new StringBuilder();
@@ -32,12 +32,12 @@ public class NFTDaoImpl implements INFTDao {
 			hashAddress = "0x" + address.toString();
 			
 			// set the properties to add to nfts table
-			statement.setString(1, nft.getNftName());
-			statement.setString(2, nft.getCreator());
-			statement.setString(3, nft.getCategory());
-			statement.setString(4, hashAddress);
-			statement.setDouble(5, nft.getPrice());
-			statement.execute();
+			insertStatement.setString(1, nft.getNftName());
+			insertStatement.setString(2, nft.getCreator());
+			insertStatement.setString(3, nft.getCategory());
+			insertStatement.setString(4, hashAddress);
+			insertStatement.setDouble(5, nft.getPrice());
+			insertStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -46,10 +46,10 @@ public class NFTDaoImpl implements INFTDao {
 	@Override
 	public int updateNFTPrice(String address, double price) {
 		try (Connection connection = DbConnection.openConnection();
-				PreparedStatement statement = connection.prepareStatement(Queries.UPDATEPRICEQUERY);) {
-			statement.setDouble(1, price);
-			statement.setString(2, address);
-			statement.execute();
+				PreparedStatement updatePrice = connection.prepareStatement(Queries.UPDATEPRICEQUERY);) {
+			updatePrice.setDouble(1, price);
+			updatePrice.setString(2, address);
+			updatePrice.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -59,9 +59,9 @@ public class NFTDaoImpl implements INFTDao {
 	@Override
 	public void deleteNFT(String address) {
 		try (Connection connection = DbConnection.openConnection();
-				PreparedStatement statement = connection.prepareStatement(Queries.DELETEQUERY);) {
-			statement.setString(1, address);
-			statement.execute();
+				PreparedStatement deleteStatement = connection.prepareStatement(Queries.DELETEQUERY);) {
+			deleteStatement.setString(1, address);
+			deleteStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -71,8 +71,8 @@ public class NFTDaoImpl implements INFTDao {
 	public List<NFT> findAllNFTs() {
 		List<NFT> nfts = new ArrayList<>();
 		try (Connection connection = DbConnection.openConnection();
-				PreparedStatement statement = connection.prepareStatement(Queries.QUERYALL);) {
-			ResultSet result = statement.executeQuery();
+				PreparedStatement getAllNFTs = connection.prepareStatement(Queries.QUERYALL);) {
+			ResultSet result = getAllNFTs.executeQuery();
 			while (result.next()) {
 				NFT nft = new NFT();
 				
@@ -99,10 +99,10 @@ public class NFTDaoImpl implements INFTDao {
 	public List<NFT> findByCategory(String category) throws NFTNotFoundException {
 		List<NFT> nfts = new ArrayList<>();
 		try (Connection connection = DbConnection.openConnection();
-				PreparedStatement statement = connection.prepareStatement(Queries.QUERYBYCATEGORY);) {
+				PreparedStatement getByCategory = connection.prepareStatement(Queries.QUERYBYCATEGORY);) {
 			//find NFTs based on category
-			statement.setString(1, category);
-			ResultSet result = statement.executeQuery();
+			getByCategory.setString(1, category);
+			ResultSet result = getByCategory.executeQuery();
 			while (result.next()) {
 				NFT nft = new NFT();
 				
@@ -128,10 +128,10 @@ public class NFTDaoImpl implements INFTDao {
 	public List<NFT> findByCreator(String creator) throws NFTNotFoundException {
 		List<NFT> nfts = new ArrayList<>();
 		try (Connection connection = DbConnection.openConnection();
-				PreparedStatement statement = connection.prepareStatement(Queries.QUERYBYCREATOR);) {
+				PreparedStatement getByCreator = connection.prepareStatement(Queries.QUERYBYCREATOR);) {
 			//find NFTs based on creator
-			statement.setString(1, creator);
-			ResultSet result = statement.executeQuery();
+			getByCreator.setString(1, creator);
+			ResultSet result = getByCreator.executeQuery();
 			while (result.next()) {
 				NFT nft = new NFT();
 				
@@ -156,10 +156,10 @@ public class NFTDaoImpl implements INFTDao {
 	@Override
 	public void addNFTToCart(String address) {
 		try (Connection connection = DbConnection.openConnection();
-				PreparedStatement statement = connection.prepareStatement(Queries.INSERTCARTQUERY);) {
+				PreparedStatement insertStatement = connection.prepareStatement(Queries.INSERTCARTQUERY);) {
 			//add NFT to cart based on address
-			statement.setString(1, address);
-			statement.execute();
+			insertStatement.setString(1, address);
+			insertStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -169,8 +169,8 @@ public class NFTDaoImpl implements INFTDao {
 	public List<NFT> findAllNFTsFromCart() {
 		List<NFT> nfts = new ArrayList<>();
 		try (Connection connection = DbConnection.openConnection();
-				PreparedStatement statement = connection.prepareStatement(Queries.QUERYALLCART);) {
-			ResultSet result = statement.executeQuery();
+				PreparedStatement getNFTsFromCart = connection.prepareStatement(Queries.QUERYALLCART);) {
+			ResultSet result = getNFTsFromCart.executeQuery();
 			while (result.next()) {
 				NFT nft = new NFT();
 				
@@ -196,10 +196,10 @@ public class NFTDaoImpl implements INFTDao {
 	@Override
 	public void deleteFromCart(String address) {
 		try (Connection connection = DbConnection.openConnection();
-				PreparedStatement statement = connection.prepareStatement(Queries.DELETEFROMCARTQUERY);) {
+				PreparedStatement deleteFromCart = connection.prepareStatement(Queries.DELETEFROMCARTQUERY);) {
 			//delete NFT from cart table based on address
-			statement.setString(1, address);
-			statement.execute();
+			deleteFromCart.setString(1, address);
+			deleteFromCart.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -260,8 +260,8 @@ public class NFTDaoImpl implements INFTDao {
 	public List<NFT> findAllNFTsFromCollection() {
 		List<NFT> nfts = new ArrayList<>();
 		try (Connection connection = DbConnection.openConnection();
-				PreparedStatement statement = connection.prepareStatement(Queries.QUERYALLCOLLECTION);) {
-			ResultSet result = statement.executeQuery();
+				PreparedStatement getAllFromCollection = connection.prepareStatement(Queries.QUERYALLCOLLECTION);) {
+			ResultSet result = getAllFromCollection.executeQuery();
 			while (result.next()) {
 				NFT nft = new NFT();
 				
@@ -319,9 +319,9 @@ public class NFTDaoImpl implements INFTDao {
 	public double showBalance() {
 		double balance = 0;
 		try (Connection connection = DbConnection.openConnection();
-				PreparedStatement statement = connection.prepareStatement(Queries.QUERYWALLET);) {
+				PreparedStatement getBalance = connection.prepareStatement(Queries.QUERYWALLET);) {
 			//get balance from wallet table
-			ResultSet result = statement.executeQuery();
+			ResultSet result = getBalance.executeQuery();
 			while (result.next()) {
 				balance = result.getDouble("balance");
 			}
