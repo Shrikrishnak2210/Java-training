@@ -1,6 +1,6 @@
 package com.nftmarketplace.client;
 
-import java.util.List; 
+import java.util.List;
 import java.util.Scanner;
 import com.nftmarketplace.exceptions.NFTNotFoundException;
 import com.nftmarketplace.model.NFT;
@@ -28,9 +28,9 @@ public class Client {
 				System.out.println("1.Search NFTs by creator\n2.Search NFTs by category\n3.View all NFTs\n"
 						+ "4.Admin\n5.My Cart\n6.Add to Cart\n7.My Collection\n8.Wallet\n9.Exit\n");
 				System.out.println("Enter choice:");
-				int choice = scanner.nextInt();
+				int option = scanner.nextInt();
 				scanner.nextLine();
-				switch (choice) {
+				switch (option) {
 				case 1:
 					System.out.println("Enter creator name: ");
 					creator = scanner.nextLine();
@@ -61,10 +61,11 @@ public class Client {
 					break;
 				case 4:
 					System.out.println("Welcome to Admin Page");
-					System.out.println("1.Add NFT\n2.Delete NFT\n3.Update NFT price\n"
-							+ "4.View all NFTs\n5.Back to Main Menu\n");
+					System.out.println(
+							"1.Add NFT\n2.Delete NFT\n3.Update NFT price\n" + "4.Back to Main Menu\n");
 					System.out.println("Enter choice:");
-					choice = scanner.nextInt();
+
+					int choice = scanner.nextInt();
 					switch (choice) {
 					case 1:
 						scanner.nextLine();
@@ -81,13 +82,13 @@ public class Client {
 						System.out.println();
 						break;
 					case 2:
-						System.out.print("Enter NFT address: ");
+						System.out.print("Enter NFT address to delete: ");
 						address = scanner.next();
 						nftService.deleteNFT(address);
 						System.out.println();
 						break;
 					case 3:
-						System.out.print("Enter Address: ");
+						System.out.print("Enter NFT Address to update price: ");
 						address = scanner.next();
 						System.out.print("Enter new price: ");
 						price = scanner.nextDouble();
@@ -95,14 +96,6 @@ public class Client {
 						System.out.println();
 						break;
 					case 4:
-						nfts = nftService.getAllNFTs();
-						System.out.println("\nNFTs available in MintSpace");
-						for (NFT book : nfts) {
-							System.out.println(book);
-						}
-						System.out.println();
-						break;
-					case 5:
 						System.out.println();
 						break;
 					default:
@@ -110,19 +103,19 @@ public class Client {
 						break;
 					}
 					break;
-					
+
 				case 5:
 					System.out.println("My Cart");
-					System.out.println("1.Show NFTs in cart\n2.Delete NFT from Cart\n3.Buy from Cart\n"
-							+ "4.Back to Main Menu\n");
+					System.out.println(
+							"1.Show NFTs in cart\n2.Delete NFT from Cart\n3.Buy from Cart\n" + "4.Back to Main Menu\n");
 					System.out.println("Enter choice:");
 					choice = scanner.nextInt();
 					switch (choice) {
 					case 1:
 						nfts = nftService.getAllNFTsFromCart();
 						System.out.println("\nNFTs in Cart");
-						for (NFT book : nfts) {
-							System.out.println(book);
+						for (NFT nft : nfts) {
+							System.out.println(nft);
 						}
 						System.out.println();
 						break;
@@ -133,11 +126,12 @@ public class Client {
 						System.out.println();
 						break;
 					case 3:
-						if (nftService.buy() > 0) {
-							System.out.println("Total amount: " + nftService.buy());
-							System.out.println("NFTs added to your collection\n");
-						}
-						break;
+                        double total = nftService.buy();
+                        if (total > 0) {
+                            System.out.println("Total amount: " + total);
+                            System.out.println("NFTs added to your collection\n");
+                        }
+                        break;
 					case 4:
 						System.out.println();
 						break;
@@ -146,9 +140,9 @@ public class Client {
 						break;
 					}
 					break;
-					
+
 				case 6:
-					System.out.print("Enter Address: ");
+					System.out.print("Enter NFT Address to add to cart: ");
 					address = scanner.next();
 					try {
 						nftService.addNFTToCart(address);
@@ -157,18 +151,19 @@ public class Client {
 					}
 					System.out.println("Added to Cart\n");
 					break;
-				
+
 				case 7:
 					System.out.println("My Collection");
 					System.out.println("1.Show NFTs in Collection\n2.Sell NFT\n3.Back to Main Menu\n");
 					System.out.println("Enter choice:");
 					choice = scanner.nextInt();
+
 					switch (choice) {
 					case 1:
 						nfts = nftService.getAllNFTsFromCollection();
 						System.out.println("\nNFTs in Collection");
-						for (NFT book : nfts) {
-							System.out.println(book);
+						for (NFT nft : nfts) {
+							System.out.println(nft);
 						}
 						System.out.println();
 						break;
@@ -185,8 +180,9 @@ public class Client {
 						System.out.println("Invalid choice\n");
 						break;
 					}
+
 					break;
-					
+
 				case 8:
 					System.out.println("My Wallet");
 					System.out.println("1.Show balance\n2.Add Balance\n3.Back to Main Menu\n");
@@ -202,7 +198,7 @@ public class Client {
 						System.out.println("Enter amount");
 						balance = scanner.nextDouble();
 						nftService.addBalance(balance);
-						System.out.println();
+						System.out.println("Balance added to your Wallet\n");
 						break;
 					case 3:
 						System.out.println();

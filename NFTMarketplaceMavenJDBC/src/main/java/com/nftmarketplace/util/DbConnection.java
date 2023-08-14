@@ -15,14 +15,14 @@ public class DbConnection {
 
 		try {
 			connection = DriverManager.getConnection(url, username, password);
-			PreparedStatement preparedStatement = connection.prepareStatement(Queries.CREATEQUERY);
-			PreparedStatement prepared = connection.prepareStatement(Queries.CREATECARTQUERY);
-			PreparedStatement prepare = connection.prepareStatement(Queries.CREATEWALLETQUERY);
-			PreparedStatement statement = connection.prepareStatement(Queries.CREATECOLLECTIONQUERY);
-			preparedStatement.execute();
-			prepared.execute();
-			statement.execute();
-			prepare.execute();
+			PreparedStatement createQuery = connection.prepareStatement(Queries.CREATEQUERY);
+			PreparedStatement createCart = connection.prepareStatement(Queries.CREATECARTQUERY);
+			PreparedStatement createWallet = connection.prepareStatement(Queries.CREATEWALLETQUERY);
+			PreparedStatement createCollection = connection.prepareStatement(Queries.CREATECOLLECTIONQUERY);
+			createQuery.execute();
+			createCart.execute();
+			createCollection.execute();
+			createWallet.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
