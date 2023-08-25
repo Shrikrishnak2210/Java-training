@@ -1,0 +1,23 @@
+spring:
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+      group-id: testgroup
+      bootstrap-servers:
+      - localhost:9092
+    producer:
+      bootstrap-servers:
+      - localhost:9092
+      
+     
+
+  datasource:
+        url: jdbc:h2:mem:testdb
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+                dialect: org.hibernate.dialect.H2Dialect
+                format_sql: true
+      show-sql: true 
